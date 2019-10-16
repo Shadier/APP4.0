@@ -5,7 +5,6 @@ import { PersistGate } from 'redux-persist/integration/react'
 import Nav from './config/route'
 
 export default class App extends Component<{}, {}> {
-    
     render() {
         return (
             <Provider store={store} >

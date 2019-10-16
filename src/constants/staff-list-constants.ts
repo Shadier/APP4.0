@@ -1,0 +1,5 @@
+export enum staffListConstants {
+    STAFF_LIST_BEGIN = 'STAFF_LIST_BEGIN',
+    STAFF_LIST_SUCCESS = 'STAFF_LIST_SUCCESS',
+    STAFF_LIST_ERROR = 'STAFF_LIST_ERROR',
+}

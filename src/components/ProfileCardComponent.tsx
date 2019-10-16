@@ -14,7 +14,7 @@ interface ProfileCardProps {
   profile_picture: string
   number: number
   type: string
-  role: string //'Admin''Teacher''Sponsor''Sponsee'
+  role: string 
   last_signed: string
   onClick : any
 }
@@ -42,6 +42,11 @@ export default class ProfileCardComponent extends Component<ProfileCardProps, Pr
           this.DESTRUCTIVE_INDEX = 0
           this.CANCEL_INDEX = 2
         }
+        return
+      case 'Staff':
+        this.BUTTONS = menuOption.staff
+        this.DESTRUCTIVE_INDEX = 0
+        this.CANCEL_INDEX = 4
         return
       case 'Teacher':
         this.BUTTONS = menuOption.teacher

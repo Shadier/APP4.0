@@ -17,10 +17,10 @@ import AdminsList from '../screens/Admin/List'
     
             const listsTabs = createMaterialTopTabNavigator(
                 {
-                    TeachersList: {
-                        screen: TeachersList, 
+                    AdminsList: {
+                        screen: AdminsList, 
                         navigationOptions: {
-                            title: 'Teachers',
+                            title: 'Staff',
                         }
                     },
                     SponsorsList: {
@@ -32,18 +32,12 @@ import AdminsList from '../screens/Admin/List'
                     SponseesList: {
                         screen: SponseesList, 
                         navigationOptions: {
-                            title: 'Sponsees',
+                            title: 'Students',
                         }
                     },
-                    AdminsList: {
-                        screen: AdminsList, 
-                        navigationOptions: {
-                            title: 'Admins',
-                        }
-                    }
                 },
                 {
-                    initialRouteName: 'TeachersList',
+                    initialRouteName: 'AdminsList',
                     tabBarOptions: {
                         activeTintColor: '#ffffff',
                         labelStyle: {

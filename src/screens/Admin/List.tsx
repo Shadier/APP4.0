@@ -8,6 +8,7 @@ import { connect } from 'react-redux'
 import { admins } from '../../actions/admin-list-actions'
 import { STYLES } from '../../style';
 import { NavigationEvents } from "react-navigation";
+import { View } from 'react-native'
 
 
 interface ListProps {
@@ -49,17 +50,13 @@ export class List extends Component<ListProps, ListState> {
     }
   }
   filterList = (text : string) => {
+    let filter: boolean = false
     this.setState({
       search: text
     })
     text = text.replace(/ /g, "")
-    let search : string 
-    let filter: boolean = false
-    if(text.length > 0){
-      search = text
-      filter = true
-    }
-    console.log(text)
+    if(text.length > 0)
+      filter = true    
     this.props.admins(text)
     this.setState({filterActive: filter});
   }
@@ -68,33 +65,32 @@ export class List extends Component<ListProps, ListState> {
     this.setState({
       filterActive: false,
       search: ''
-    }),
-    () => this.props.admins();
+    })
+    this.props.admins();
   } 
 
   getSnapshotBeforeUpdate = (prevp : ListProps) => {
-    console.log(JSON.stringify(prevp.list)+" "+JSON.stringify(this.props.list))
     if(prevp.list != this.props.list)
-    this.renderList()
+      this.renderList()
   }
 
 
   renderList = () => {
+
     this.setState({
       admins: [],
       message: <></>
     })
+    console.log(this.state.filterActive)
+    const msg = (this.props.list.length < 1 && this.state.filterActive)? 'No matching Administrators' : 'There are no staff personal registered'
+    const msgComponent = (this.props.list.length < 1)? (<EmptyListMessage text ={msg}/>) : (<></>)
+     
+      
+    
     console.log('llama a render y list vale: '+ JSON.stringify(this.props.list))
     let adminsList: Array<any> = this.props.list
 
-    if(this.state.filterActive && (typeof this.props.list === 'undefined' || this.props.list.length < 1))
-      this.setState({
-        message: <EmptyListMessage text = 'No matching Administrators'/>
-      })
-    if(!this.state.filterActive && (typeof this.props.list === 'undefined' || this.props.list.length < 1))
-      this.setState({
-        message: <EmptyListMessage text ='There are no Admins' />
-      })
+    
 
     if ((typeof adminsList.length !== 'undefined')) {
        
@@ -106,8 +102,8 @@ export class List extends Component<ListProps, ListState> {
             first_name = { p.first_name }
             last_name ={ p.last_name }
             number = { p.numSponsees }
-            type =  'sponsees'
-            role = 'Admin'
+            type =  'students'
+            role = 'Staff'
             profile_picture = { p.profile_picture }
             last_signed = { p.last_signed }
             onClick = {() => this.goToOthersProfile(p.first_name) }
@@ -117,7 +113,7 @@ export class List extends Component<ListProps, ListState> {
     
       this.setState({
         admins: list,
-        message: <></>
+        message: msgComponent
       })
 
       
@@ -133,14 +129,12 @@ export class List extends Component<ListProps, ListState> {
             this.props.admins()
             this.setState({
               filterActive: false,
-              admins: [],
-              message: Component,
+              message: <></>,
+              search: ''
             })
           }}
         />
-        <Root>
-          <Container>
-            <Content padder>
+        <View style={{padding: 16,}}>
             <SearchBarComponents 
               setText={this.state.search}
               callback={this.filterList}
@@ -152,9 +146,7 @@ export class List extends Component<ListProps, ListState> {
             </Button>
             {this.state.admins}
             {this.state.message}
-            </Content>
-          </Container>
-        </Root>
+        </View>
       </PTRView>
     )
   }
